@@ -1,15 +1,10 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/react-starter-kit",
+    "name": "ysato/pantori",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": [
-        "laravel",
-        "framework"
-    ],
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
@@ -29,7 +24,8 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "Ysato\\Pantori\\": "src/"
         }
     },
     "autoload-dev": {
@@ -65,6 +61,30 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "coverage": [
+            "@php artisan config:clear --ansi",
+            "@php -d zend_extension=xdebug.so -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage"
+        ],
+        "pcov": [
+            "@php artisan config:clear --ansi",
+            "@php -d extension=pcov.so -d pcov.enabled=1 ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage --coverage-clover=build/coverage.xml"
+        ],
+        "cs": "phpcs",
+        "cs-fix": "phpcbf",
+        "phpmd": "phpmd app,src text ./phpmd.xml",
+        "qa": [
+            "phpstan --memory-limit=-1",
+            "psalm --no-cache"
+        ],
+        "spectate": "ENABLE_SPECTATION_REPORT=true ./vendor/bin/phpunit --no-progress --no-results",
+        "lints": [
+            "@cs",
+            "@qa"
+        ],
+        "tests": [
+            "@lints",
+            "@test"
         ]
     },
     "extra": {
@@ -81,6 +101,9 @@
             "digitalrevolution/php-codesniffer-baseline": true,
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        },
+        "platform": {
+            "php": "8.4"
         }
     },
     "minimum-stability": "stable",
