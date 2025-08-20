@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: pantori-postgres
+    environment:
+      POSTGRES_DB: pantori
+      POSTGRES_USER: pantori
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: pantori-php
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - postgres
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: pantori
+      DB_USERNAME: pantori
+      DB_PASSWORD: password
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: pantori-nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

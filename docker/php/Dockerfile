@@ -6,9 +6,13 @@ RUN update-ca-certificates
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS autoconf
 RUN apk add --no-cache linux-headers
+RUN apk add --no-cache postgresql-dev
 
 RUN pecl install https://pecl.php.net/get/xdebug-3.4.3.tgz
 RUN pecl install pcov
+
+RUN docker-php-ext-install pgsql
+RUN docker-php-ext-install pdo_pgsql
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
