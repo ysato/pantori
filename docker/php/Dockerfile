@@ -8,7 +8,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS autoconf
 RUN apk add --no-cache linux-headers
 RUN apk add --no-cache postgresql-dev icu-dev
 
-RUN pecl install https://pecl.php.net/get/xdebug-3.4.3.tgz
+RUN pecl install https://pecl.php.net/get/xdebug-3.4.3.tgz && \
+    docker-php-ext-enable xdebug
 RUN pecl install pcov
 
 RUN docker-php-ext-install pgsql

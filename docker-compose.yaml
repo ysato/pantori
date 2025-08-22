@@ -19,6 +19,8 @@ services:
     container_name: pantori-php
     volumes:
       - .:/var/www/html
+      - ./docker/php/99-dev.ini:/usr/local/etc/php/conf.d/99-dev.ini:ro
+      - ./docker/php/99-xdebug.ini:/usr/local/etc/php/conf.d/99-xdebug.ini:ro
     working_dir: /var/www/html
     depends_on:
       - postgres
