@@ -1,13 +1,13 @@
 services:
   postgres:
-    image: postgres:16
+    image: postgres:17
     container_name: pantori-postgres
-    environment:
-      POSTGRES_DB: pantori
-      POSTGRES_USER: pantori
-      POSTGRES_PASSWORD: password
     ports:
-      - "5432:5432"
+      - "127.0.0.1:${DB_PORT}:5432"
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -22,13 +22,6 @@ services:
     working_dir: /var/www/html
     depends_on:
       - postgres
-    environment:
-      DB_CONNECTION: pgsql
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_DATABASE: pantori
-      DB_USERNAME: pantori
-      DB_PASSWORD: password
     restart: unless-stopped
 
   nginx:
