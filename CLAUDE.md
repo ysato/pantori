@@ -36,4 +36,15 @@
   - ✅ 「slug正規表現チェック（/^[a-zA-Z0-9]+/）」
   - ✅ 「pantriesテーブル作成（id, slug）」
 
+# ドキュメント構成方針
+
+段階的機能追加に対応した時系列・階層管理を採用：
+
+- docs/spec/**: 要件定義（バージョン別・EARS記法）
+- docs/design/**: 設計文書（機能横断・システム全体方針）
+- docs/tasks/**: 実装タスク（作業単位・1-3日で完了）
+- docs/decisions/**: 設計決定記録（ADR形式）
+
+詳細は `docs/decisions/001-documentation-structure.md` を参照。
+
 
